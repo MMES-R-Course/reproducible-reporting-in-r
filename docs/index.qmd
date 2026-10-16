@@ -1,26 +1,409 @@
 ---
-title: "My first doc"
-author: "Jeremiah B."
-format: html
+title: "My Personal Quarto Cheat Sheet"
+author: Jeremiah Blondeau
+date: "`r Sys.Date()`"
+format: 
+  html:
+    theme: default
+    toc: true
+    number-sections: false
+    code-fold: show
+# YAML settings: 
+# The format options control the output. 
+# You can also use pdf, docx, or revealjs.
+# Citations (nocite parameter):
+# The line below ensures all references in your .bib file are included, 
+# even if not explicitly cited in the text.
+bibliography: references.bib
+# nocite: '@*'
+editor: 
+  markdown: 
+    wrap: 72
+editor_options: 
+  chunk_output_type: console
 ---
 
-## Quarto
+# Section headers
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Use hash symbols for section headers. The number of hashes determines
+the level.
 
-## Running Code
+``` markdown
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
+## Headers
+### Level 3 Header
+#### Level 4 Header
+##### Level 5 Header
+###### Level 6 Header
 ```
 
-You can add options to executable code like this 
+## Headers
 
-```{r}
-#| echo: false
-2 * 2
+### Level 3 Header
+
+#### Level 4 Header
+
+##### Level 5 Header
+
+###### Level 6 Header
+
+# Text formatting
+
+``` markdown
+**Wrap your text in double asterisks to bold**
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+**Wrap your text in double asterisks to bold**
+
+``` markdown
+*Wrap your text in single asterisks to italicize*
+```
+
+*Wrap your text in single asterisks to italicize*
+
+``` markdown
+***Wrap your text in triple asterisks to bold & italicize***
+```
+
+***Wrap your text in triple asterisks to bold & italicize***
+
+``` markdown
+~~Wrap your text in double tildes to Strikethrough~~
+```
+
+~~Wrap your text in double tildes to Strike through~~
+
+``` markdown
+wrap inline rcode in single backticks to run code...
+2 + 2 + 2 = `\{r} 2 + 2 + 2` *backslash is not needed, only used here to print
+```
+
+2 + 2 + 2 = `{r} 2+2+2`
+
+# Ordered and numbered lists
+
+## Unordered List
+
+``` markdown
+- Item 1
+- Item 2
+  - Sub-item 2a (indent with 2 or 4 spaces)
+  - Sub-item 2b
+```
+
+- Item 1
+- Item 2
+  - Sub-item 2a (indent with 2 or 4 spaces)
+  - Sub-item 2b
+
+## Ordered List
+
+``` markdown
+1.  First step
+2.  Second step
+    i)  Sub-step with Roman numerals
+3.  Third step
+```
+
+1.  First step
+2.  Second step
+    i)  Sub-step with Roman numerals
+3.  Third step
+
+# Hyperlinks
+
+``` markdown
+Create a hyperlink using brackets for the text and parentheses for the URL address
+[Quarto Documentation](https://quarto.org)
+```
+
+[Quarto Documentation](https://quarto.org)
+
+# Tabsets
+
+<!-- Note: Tabsets render properly in HTML output. In PDF or MS Word, they fall back to standard sequential headers. -->
+
+``` markdown
+wrap the set of headers you want as tabsets with triple ::: 
+(this is called a fence)
+
+::: panel-tabset *opening fence with panel-tabset option
+## Tab 1
+
+This is the content for the first tab.
+
+## Tab 2
+
+::: panel-tabset *opening fence nested
+
+### Nested Tab 1
+
+Content for nested tab 1
+
+### Nested Tab 2
+
+Content for nested tab 2
+
+::: *closing fence nested
+
+::: *closing fence
+```
+
+:::: panel-tabset
+## Tab 1
+
+This is the content for the first tab.
+
+## Tab 2
+
+::: panel-tabset
+### Nested Tab 1
+
+Content for nested tab 1
+
+### Nested Tab 2
+
+Content for nested tab 2
+:::
+::::
+
+# Loading libraries & Reading in data
+
+This should be done at the top of your quarto doc, typically after the
+yaml, and all wrapped in a R code chunk. All the loaded data will then
+be available throughout the rest of your document.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+#| echo: fenced 
+
+
+# Loading all your libraries
+library(tidyverse)
+library(knitr)
+
+# Reading in data
+# Example: my_data <- read_csv("path/to/data.csv")
+# For this cheat sheet, we will use the built-in mtcars dataset
+my_data <- mtcars
+```
+
+# Code chunks with options
+
+```{r}
+#| label: demo-options
+#| echo: true
+#| eval: false
+
+# Common chunk options:
+# echo: true/false -> Show or hide the code in the output.
+# eval: true/false -> Run or do not run the code.
+# warning: false   -> Suppress warnings.
+# message: false   -> Suppress messages.
+# include: false   -> Run the code, but hide both code and output.
+
+print("This code is shown (echo: true) but not executed (eval: false).")
+
+```
+
+# Inserting figures and figure captions
+
+```{r}
+#| label: fig-mpg
+#| fig-cap: "Scatterplot of Car Weight vs. MPG"
+#| echo: fenced
+
+ggplot(my_data, aes(x = wt, y = mpg)) +
+  geom_point() +
+  theme_minimal() +
+  labs(x = "Weight", y = "Miles Per Gallon")
+
+```
+
+::: callout-tip
+## Tip
+
+Notice how we labeled the figure above with the option #\| label:
+fig-mpg
+
+We can then reference that figure in our text, for example...
+
+As shown in @fig-mpg, heavier cars typically have lower MPG.
+:::
+
+# Table outputs
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Average MPG by Cylinder Count"
+#| echo: fenced
+
+my_data |> 
+  group_by(cyl) |> 
+  summarise(avg_mpg = mean(mpg)) |> 
+  kable() # kable() makes a clean markdown table
+
+```
+
+::: callout-tip
+## Tip
+
+This time we labeled the table above with the option #\| label:
+tbl-summary
+
+We can then reference that table in our text.
+
+Please refer to @tbl-summary for the exact averages.
+:::
+
+# Inserting Images
+
+``` markdown
+![](images/cmes_logo.jpg){fig-align="center" width=50% .lightbox}
+
+notice the addiional options set in the {}
+fig-align="center" - centers the image
+width = 50% - scaled the original photo
+.lightbox - when user clicks on image full resolution pops up
+```
+
+![](images/cmes_logo.jpg){.lightbox fig-align="center" width="50%"}
+
+# Formulas with LaTeX
+
+``` markdown
+Insert inline math equations using a single dollar sign: $y = mx + b$.
+
+For centered display equations, use double dollar signs:
+
+$$E = mc^2$$
+```
+
+Insert inline math equations using a single dollar sign: $y = mx + b$.
+
+For centered display equations, use double dollar signs:
+
+$$E = mc^2$$
+
+## Common example equations to get a feel for LaTex syntax
+
+1.  Fractions
+
+``` markdown
+$$
+\frac{1.5}{2.3}
+$$
+```
+
+$$
+\frac{1.5}{2.3}
+$$
+
+2.  Super and Sub Scripts
+
+``` markdown
+$$
+Y = X_1 + X_2
+$$
+
+$$
+Y = X^ + X^2
+$$
+```
+
+$$
+Y = X_1 + X_2
+$$ $$
+Y = X^ + X^2
+$$
+
+3.  Square Roots
+
+``` markdown
+$$
+\sqrt{p^2}
+$$
+```
+
+$$
+\sqrt{p^2}
+$$
+
+4.  A little bit of everything
+
+``` markdown
+$$
+x_1 = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+```
+
+$$
+x_1 = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+
+5.  Linear Models
+
+``` markdown
+$$
+Y \sim X\beta_0 + X\beta_1 + \epsilo
+$$
+```
+
+$$
+Y \sim X\beta_0 + X\beta_1 + \epsilon
+$$
+
+6.  List of common mathematical symbols
+
+    In the above equations we used some common named symbols. Here are a
+    few more...
+
+    ``` markdown
+     $\alpha$, $\beta$, $\theta$, $\pi$, $\mu$
+    ```
+
+    $\alpha$, $\beta$, $\theta$, $\pi$, $\mu$
+
+    ``` markdown
+     $<$, $\leq$, $>$, $\geq$
+    ```
+
+    $<$, $\leq$, $>$, $\geq$
+
+    For a more comprehenisve list check out this [LaTex
+    Wiki](https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols)
+
+# Citations
+
+## Adding references to quarto document
+
+1.  Open your .qmd file in RStudio's **Visual Editor mode**, go to the top menu, 
+and click Insert > Citation.... You can search databases (like DOI, Crossref,
+DataCite, or PubMed). RStudio will automatically create a references.bib 
+file for you
+
+2.  Open the YAML metadata block at the very top of your Quarto document
+and add the bibliography field pointing to your .bib file
+
+```yaml
+---
+title: "My Research Document"
+author: "Your Name"
+format: html
+bibliography: references.bib
+---
+```
+
+3.  Insert Citations in the Text
+
+``` markdown
+- Standard citation: This is a great paper [@heidmann2024].
+- In-text citation: @ault2024 has some cool things too.
+- Multiple citations: Several authors agree [@heidmann2024; @grove2024].
+```
+
+- Standard citation: This is a great paper [@heidmann2024].
+- In-text citation: @ault2024 has some cool things too.
+- Multiple citations: Several authors agree [@heidmann2024; @grove2024].

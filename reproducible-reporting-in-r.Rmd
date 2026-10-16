@@ -1,6 +1,6 @@
 ---
-# title: "Reproducible Reporting in R"
-# author: "J.Blondeau"
+title: "Reproducible Reporting in R"
+author: "J.Blondeau"
 date: "`r Sys.Date()`"
 output: html_document
 bibliography: references.bib
@@ -12,9 +12,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Week 5 Exercises {.tabset}
-
-[**J.Blondeau**]{.underline}**\
-2024-9-19**
 
 ## RMarkdown Basics
 
@@ -30,19 +27,19 @@ At a minimum, your document should have examples on..
 2.  Reading in data
 3.  Loading libraries
 4.  Text formatting
-    -   italics, bold,
+    - italics, bold,
 5.  Ordered and numbered lists
 6.  Section headers
 7.  Tabsets
 8.  Code chunks
-    -   with code chunk options (i.e echo = , eval = )
+    - with code chunk options (i.e echo = , eval = )
 9.  Inserting figures
-    -   and figure captions
+    - and figure captions
 10. Table outputs
 11. Inserting Images
 12. hyperlinks
 13. Formulas with LaTeX
-14. Citations ( I like using DOI) [@grove2024] [@heidmann2024]
+14. Citations ( I like using DOI) [@grove2024] [@heidmann2024] [@grove2024a]
 
 ------------------------------------------------------------------------
 
