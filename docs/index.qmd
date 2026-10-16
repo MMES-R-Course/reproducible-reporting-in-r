@@ -1,27 +1,45 @@
 ---
 title: "My Personal Quarto Cheat Sheet"
-author: Jeremiah Blondeau
+author: 
+  - Jeremiah Blondeau
+  - Tyler Smith
 date: "`r Sys.Date()`"
 format: 
   html:
-    theme: default
+    theme: yeti
     toc: true
-    number-sections: false
+    number-sections: true
     code-fold: show
-# YAML settings: 
-# The format options control the output. 
-# You can also use pdf, docx, or revealjs.
-# Citations (nocite parameter):
-# The line below ensures all references in your .bib file are included, 
-# even if not explicitly cited in the text.
 bibliography: references.bib
-# nocite: '@*'
-editor: 
-  markdown: 
-    wrap: 72
-editor_options: 
-  chunk_output_type: console
+# nocite: '@*' Uncomment this to cite all references in .bib even if not directly cited in document
 ---
+
+# YAML Metadata
+
+  YAML are the document-level instructions on how to process and present your .qmd. 
+  There are a ton of options and we will go over just a few. For a more comprehensive list 
+  check out Greg Martin's [Customize with YAML](https://rpubs.com/drgregmartin/1266674)
+    
+
+```markdown
+---
+title: "My Personal Quarto Cheat Sheet"
+author: #List of authors using hyphens
+  - Jeremiah Blondeau
+  - Tyler Smith
+date: "`\r Sys.Date()`" #remove the \ and this will automatically fill in everytime you render
+format: # these are the instructions on how to render to doc
+  html:
+    theme: yeti #there are many built in themes
+    toc: true #Add a table of contents
+    number-sections: true #Number each section and subsection 
+    code-fold: show
+bibliography: references.bib #location of bibliography
+# nocite: '@*' Uncomment this to cite all references in .bib even if not directly cited in document
+---
+```
+
+
 
 # Section headers
 
