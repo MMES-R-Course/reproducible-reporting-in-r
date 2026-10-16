@@ -3,7 +3,7 @@ title: "My Personal Quarto Cheat Sheet"
 author: 
   - Jeremiah Blondeau
   - Tyler Smith
-date: "`r Sys.Date()`"
+date: today
 format: 
   html:
     theme: yeti
@@ -27,7 +27,7 @@ title: "My Personal Quarto Cheat Sheet"
 author: #List of authors using hyphens
   - Jeremiah Blondeau
   - Tyler Smith
-date: "`\r Sys.Date()`" #remove the \ and this will automatically fill in everytime you render
+date: today #This will automatically fill in everytime you render
 format: # these are the instructions on how to render to doc
   html:
     theme: yeti #there are many built in themes
